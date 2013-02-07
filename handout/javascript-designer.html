@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>JavaScript</title>
+  <title>JavaScript (Designer)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
 /*
@@ -139,7 +139,9 @@ pre .tex .formula {
 </head>
 <body class="normal">
   <div id="wrapper">
-      <h1 id="assignmenttwo:javascript">Assignment Two: JavaScript</h1>
+      <h1 id="assignmenttwo:javascriptfordesigners">Assignment Two: JavaScript (for Designers)</h1>
+
+<h2 id="due:february15201311:59pm">Due: February 15, 2013 @ 11:59pm</h2>
 
 <p>In this assignment, you&#8217;ll catch a fever: Bieber fever. You will be implementing the BieberFeed, a tool for displaying a streaming list of Tweets posted about Justin Bieber.</p>
 
@@ -153,7 +155,7 @@ pre .tex .formula {
 
 <p>We have provided a web server that will provide you with the 25 most recent Tweets about Justin Bieber every time you ask for them. You will build a website that takes those Tweets and presents them to the user in some kind of a streaming list.</p>
 
-<p>You will be responsible for periodically querying the server for new Tweets, and using the DOM to append them to a new part of the page. You will also be responsible for filtering out duplicates, as some Tweets may overlap with the last time you requested them.</p>
+<p>You will be responsible for reacting to incoming Tweets, and using the DOM to append them to a new part of the page.</p>
 
 <h2 id="gettingstarted">Getting Started</h2>
 
@@ -164,89 +166,61 @@ pre .tex .formula {
 
 <p>This will give you a blank <code>README.md</code> file (to contain known bugs and any features you want to highlight), a very barebones shell of an HTML file, and a picture of Justin Bieber&#8217;s face that you may use and modify as you see fit in the design of your project. There is also a &#8220;no photo&#8221; placeholder image you might want to use for Tweets that don&#8217;t have pictures associated with them.</p>
 
+<p>You should implement all of your HTML in <code>bieber.html</code>, and all of your JavaScript in <code>bieber.js</code>.</p>
+
 <h2 id="thebieberfeedserver">The BieberFeed Server</h2>
 
-<p>You will be interacting with a server we&#8217;ve provided that will give you Bieber-related Tweets. The server is located at <strong>TODO TODO TODO FILL ME IN</strong> and responds to the following requests:</p>
+<p>You will be interacting with a server we&#8217;ve provided that will give you Bieber-related Tweets. To do this, you&#8217;ll use a TA-provided library which abstracts away some of the complexity of making <a href="http://en.wikipedia.org/wiki/Ajax_(programming)">Ajax</a> requests and publishing DOM events.</p>
 
-<pre><code>/feed/:login
+<p>To get started, you have to link the TA library into your HTML page. Open up <code>bieber.html</code> in your favorite text editor, and add this to the head:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;designer-helper.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 
-<p>Make a <code>GET</code> request to <code>/feed/&lt;your CS username&gt;</code> to obtain a new block of 25 Bieber-related Tweets. The response will be returned as a <a href="http://en.wikipedia.org/wiki/JSON">JSON</a> array. Take note that some of these Tweets may be duplicates of Tweets that you&#8217;ve already seen, and it is <strong>your responsibility</strong> to filter those out. Every Tweet has a unique <code>id</code> field that you can use for this purpose.</p>
+<p>Since the idea of the BieberFeed is that it&#8217;s a live stream of Bieber-oriented Tweets, having the page refresh every second with new content would be a bit annoying. For that reason, the TA library will fetch new Tweets automatically using Ajax. You&#8217;ll then need to setup a handler for responding to these incoming Tweets.</p>
 
-<p>The available properties are <a href="https://dev.twitter.com/docs/platform-objects/tweets">those returned by the Twitter API for Tweets</a>. Note that <a href="https://dev.twitter.com/docs/tweet-entities">Tweet entities</a> are supported, so you should consider using them to create a more engaging user experience.</p>
+<h2 id="respondingtodomevents">Responding to DOM Events</h2>
 
-<pre><code>/feed/stats/:login
+<p>DOM Events are a useful way for your JavaScript to be informed of things that happen in the context of your website. A number of default events are provided, like <code>load</code>, <code>click</code>, and <code>mouseover</code>, and it&#8217;s also possible to define your own.</p>
+
+<p>For example, let&#8217;s say you want to execute a piece of JavaScript once your page finishes loading. The <code>window</code> object publishes the <code>load</code> event, which you can listen for by assigning a function to the <code>window.onload</code> property:</p>
+
+<pre><code>window.onload = function(event){
+    // your code here
+};
 </code></pre>
 
-<p>Make a <code>GET</code> request to <code>/feed/stats/&lt;your CS username&gt;</code> to obtain statistical information on the Tweets the server is providing, including the total number of Tweets available, the ID of the last-known Tweet, and an array of the search terms the server is using to find new Tweets. For example:</p>
+<p>&#8230; or more appropriately, using the <code>obj.addEventListener(...)</code> method:</p>
 
-<pre><code>{  
-  &quot;count&quot; : 24,  // number of tweets  
-  &quot;last&quot; : &quot;&quot;, // id of the last tweet  
-  &quot;terms&quot; : [ &quot;bieber&quot; , &quot;justin bieber&quot;, &quot;@justinbieber&quot; ] // the search terms used to query the Twitter streaming API  
+<pre><code>window.addEventListener('load', function(event){
+    // your code here
+}, false);
+</code></pre>
+
+<p>Note that the last parameter, <code>false</code>, defines whether the event happens in bubble or capture mode &#8211; under almost every circumstance, you want this set to <code>false</code>. Don&#8217;t worry about it. Also note that stencil code for this is already provided in <code>bieber.js</code>.</p>
+
+<p>You can also pass the name of the function (<strong>without</strong> parentheses at the end) in either case:</p>
+
+<pre><code>window.addEventListener('load', myLoadHandler, false);
+
+// more code...
+
+function myLoadHandler(event) {
+    // your code here
 }
 </code></pre>
 
-<h2 id="usingajax">Using Ajax</h2>
+<p>The TA library publishes an event called <code>swagreceived</code> on the <code>document</code> object whenever new Tweets are ready for use. You can listen for events using something like this:</p>
 
-<p>Since the idea of the BieberFeed is that it&#8217;s a live stream of Bieber-oriented Tweets, having the page refresh every second with new content would be a bit annoying. For that reason, we&#8217;ll be using a technique called <a href="http://en.wikipedia.org/wiki/Ajax_(programming)">Ajax</a>, which historically stands for Asynchronous JavaScript and XML, but actually applies to any kind of data (text, <a href="http://en.wikipedia.org/wiki/JSON">JSON</a>, and more).</p>
+<pre><code>document.addEventListener('swagreceived', function(event){
+    var username = event.handle;    // the username of the Tweeter
+    var text = event.text;          // the text of the Tweet
 
-<p>Ajax allows you to make an HTTP request to a website (usually your own, see below) in the background, and then be notified of the results after the content has been fetched. This all happens without the need to refresh the page, so you can then act on the new information immediately from JavaScript.</p>
-
-<p>The standard template for an Ajax request looks something like this:</p>
-
-<pre><code>// create a request object
-var request = new XMLHttpRequest();
-
-// specify the HTTP method, URL, and asynchronous flag
-request.open('GET', 'http://www.example.com/content.json', true);
-
-// add an event handler
-request.addEventListener('load', function(e){
-    if (request.status == 200) {
-        // do something with the loaded content
-        var content = request.responseText;
-    } else {
-        // something went wrong, check the request status
-        // hint: 403 means Forbidden, maybe you forgot your username?
-    }
+    // your code here
 }, false);
-
-// start the request, optionally with a request body for POST requests
-request.send(null);
 </code></pre>
 
-<p>You might want to encapsulate this into a simple function to make your life easier &#8211; think about how you could write a function that works like <code>request(theURL, callback)</code>.</p>
-
-<p>Combine the above template with something like <code>setInterval(...)</code> (see <a href="https://developer.mozilla.org/en-US/docs/DOM/window.setInterval">the Mozilla Developer Network&#8217;s documentation</a>) to periodically load new Tweets.</p>
-
-<p>If you want to learn more, there&#8217;s <a href="https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest/Using_XMLHttpRequest">a good tutorial on Using XMLHttpRequest on the Mozilla Developer Network</a>.</p>
-
-<h4 id="aside:thesame-originpolicy">Aside: the Same-Origin Policy</h4>
-
-<p>In order to prevent a particularly malicious class of attacks known as <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">cross-site request forgery</a>, web browsers enforce a policy known as the <a href="http://en.wikipedia.org/wiki/Same_origin_policy">same-origin policy</a>. Essentially, the same-origin policy places restrictions on what can be done with content that originates from a different <em>origin</em> than that of the page you&#8217;re currently on (an origin being a combination of a domain name, port, and protocol &#8211; HTTP or HTTPS).</p>
-
-<p>By default, Ajax requests to websites on different origins are <strong>forbidden</strong> by web browsers. The reason for this is that I could, for instance, make an Ajax request from my website at <code>evilsite.com</code> to <code>facebook.com</code>, and the browser would send along all of your saved cookies for Facebook, meaning I would have unrestricted access to your (fully logged in!) Facebook session. I could somewhat trivially construct a website that, just by virtue of visiting it, would &#8220;like&#8221; my company&#8217;s page on Facebook (or something much more malicious). Thus, the same-origin policy is a &#8220;Good Thing&#8221;.</p>
-
-<p>However, there are times when the same-origin policy makes it very inconvenient to do legitimate things &#8211; like on this project. To that end, a new standard called <a href="https://developer.mozilla.org/en-US/docs/HTTP/Access_control_CORS">CORS</a> has evolved. By adding a few headers to our responses from the BieberFeed server:</p>
-
-<pre><code>Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: GET, POST, OPTIONS
-Access-Control-Allow-Headers: Content-Type, Authorization, Content-Length, X-Requested-With
-</code></pre>
-
-<p>&#8230; we are able to inform the browser that &#8220;yes, this website will allow other websites to make requests to it.&#8221; In particular, <code>Access-Control-Allow-Origin: *</code> says that our server will respond to requests from <em>any</em> origin. In practice, you would want to place a list of domain names here that your website is explicitly allowing requests from (for example, Facebook might not want to allow <code>evilsite.com</code> to make Ajax requests to it, but it might allow <code>instagram.com</code> to do it).</p>
-
-<h2 id="parsingjson">Parsing JSON</h2>
-
-<p>The responses from the BieberFeed server will come back as <a href="http://en.wikipedia.org/wiki/JSON">JSON</a>, which is a data storage format based on the object-literal notation in JavaScript. JSON objects are actually valid JavaScript code, but because that leaves the door wide open for nasty things, you don&#8217;t want to just dump it in an <code>eval(...)</code>. Parsing JSON safely is fairly straightforward:</p>
-
-<pre><code>// inside your Ajax response handler
-var content = request.responseText;
-var data = JSON.parse(content);
-</code></pre>
-
-<p>The <code>data</code> object now holds a JavaScript representation of the data that was in <code>content</code> as a string. So, for example, in response to the <code>/feed/:login</code> request, <code>data</code> would be an array, each element of which would be an object with the properties of an individual Tweet.</p>
+<p>The event object passed into the event has a handful of properties you may find useful. <code>event.handle</code> is the username of the person who posted the Tweet; <code>event.text</code> is the body of the Tweet; and <code>event.tweet</code> is an object full of extra information on the Tweet. The available properties of <code>event.tweet</code> are <a href="https://dev.twitter.com/docs/platform-objects/tweets">those returned by the Twitter API for Tweets</a>. Note that <a href="https://dev.twitter.com/docs/tweet-entities">Tweet entities</a> are supported, so you should consider using them to create a more engaging user experience.</p>
 
 <h2 id="appendingthetweets">Appending the Tweets</h2>
 
@@ -264,7 +238,7 @@ ul.appendChild(li);</code></pre>
 
 <h2 id="otherniceties">Other Niceties</h2>
 
-<p>Think about how your choice of mechanisms will affect the user experience of the BieberFeed. Do new Tweets appear at the top, or the bottom? Does the page keep growing in length, or do you start removing old Tweets after a certain point? Can the user start and stop the feed (hint: look up <code>clearInterval(...)</code>)? Is the list of Tweets independently scrollable (hint: lookup <code>overflow-y: auto</code>), or does the entire page scroll with it?</p>
+<p>Think about how your choice of mechanisms will affect the user experience of the BieberFeed. Do new Tweets appear at the top, or the bottom? Does the page keep growing in length, or do you start removing old Tweets after a certain point? Can the user start and stop the feed? Is the list of Tweets independently scrollable (hint: lookup <code>overflow-y: auto</code>), or does the entire page scroll with it?</p>
 
 <p>Add any features you can to try to make the experience of looking at so many Bieber Tweets bearable.</p>
 
@@ -274,7 +248,7 @@ ul.appendChild(li);</code></pre>
 
 <p>To hand in your project, from your project directory, run:</p>
 
-<pre><code>cs132_handin javascript
+<pre><code>cs132_handin javascript-designer
 </code></pre>
 
 <p>That&#8217;s it!</p>
