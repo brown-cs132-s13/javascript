@@ -86,7 +86,7 @@ var ul = document.getElementById('tweets');
     
 // create a new li element for the Tweet, and append it
 var li = document.createElement('li');
-li.innerHTML = '<strong>' + data[0].user.name + '</strong> ' + data[0].text;
+li.innerHTML = '<strong>' + event.handle + '</strong> ' + event.text;
 ul.appendChild(li);
 ```
 

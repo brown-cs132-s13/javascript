@@ -235,7 +235,7 @@ var ul = document.getElementById(&apos;tweets&apos;);
     
 // create a new li element for the Tweet, and append it
 var li = document.createElement(&apos;li&apos;);
-li.innerHTML = &apos;&lt;strong&gt;&apos; + data[0].user.name + &apos;&lt;/strong&gt; &apos; + data[0].text;
+li.innerHTML = &apos;&lt;strong&gt;&apos; + event.handle + &apos;&lt;/strong&gt; &apos; + event.text;
 ul.appendChild(li);</code></pre>
 
 <p>You might want to use <code>element.insertBefore(...)</code> instead of <code>element.appendChild(...)</code> depending on how you want to indicate Tweet chronology (newest on top vs. newest on bottom). The <a href="https://developer.mozilla.org/en-US/docs/DOM/element">Mozilla Developer Network documentation for HTML elements</a> includes a large number of DOM methods you could use to make your life easier.</p>
