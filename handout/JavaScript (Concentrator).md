@@ -1,4 +1,5 @@
 # Assignment Two: JavaScript
+## Due: February 15, 2013 @ 11:59pm
 In this assignment, you'll catch a fever: Bieber fever. You will be implementing the BieberFeed, a tool for displaying a streaming list of Tweets posted about Justin Bieber.
 
 **Important Note**: this project uses Ajax that violates [the same-origin policy][sop], and as such, it requires a web browser that supports XMLHttpRequest 2 and [CORS][cors]. This means you **must** be using [a semi-recent web browser][caniuse]: Firefox 4+, Chrome 7+, Safari 5+, or IE 10+.
@@ -22,8 +23,10 @@ Create a new directory to hold your project's files, and then run:
 
 This will give you a blank `README.md` file (to contain known bugs and any features you want to highlight), a very barebones shell of an HTML file, and a picture of Justin Bieber's face that you may use and modify as you see fit in the design of your project. There is also a "no photo" placeholder image you might want to use for Tweets that don't have pictures associated with them.
 
+You should implement all of your HTML in `bieber.html`, and all of your JavaScript in `bieber.js`.
+
 ## The BieberFeed Server
-You will be interacting with a server we've provided that will give you Bieber-related Tweets. The server is located at **TODO TODO TODO FILL ME IN** and responds to the following requests:
+You will be interacting with a server we've provided that will give you Bieber-related Tweets. The server is located at `http://bieber.cs.brown.edu` and responds to the following requests:
 
     /feed/:login
 
@@ -77,7 +80,7 @@ The standard template for an Ajax request looks something like this:
 
 You might want to encapsulate this into a simple function to make your life easier -- think about how you could write a function that works like `request(theURL, callback)`.
 
-Combine the above template with something like `setInterval(...)` (see [the Mozilla Developer Network's documentation][mdn-setInterval]) to periodically load new Tweets.
+Combine the above template with something like `setInterval(...)` (see [the Mozilla Developer Network's documentation][mdn-setInterval]) to periodically load new Tweets. Note that the timeout value passed to `setInterval(...)` is in milliseconds, and we ask that you don't use a value smaller than 3 seconds so as not to overload our server.
 
   [mdn-setInterval]: https://developer.mozilla.org/en-US/docs/DOM/window.setInterval
 
