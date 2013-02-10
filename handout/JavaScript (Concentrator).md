@@ -26,7 +26,7 @@ This will give you a blank `README.md` file (to contain known bugs and any featu
 You should implement all of your HTML in `bieber.html`, and all of your JavaScript in `bieber.js`.
 
 ## The BieberFeed Server
-You will be interacting with a server we've provided that will give you Bieber-related Tweets. The server is located at `http://bieber.cs.brown.edu` and responds to the following requests:
+You will be interacting with a server we've provided that will give you Bieber-related Tweets. The server is located at `http://bieber.mattpatenaude.com` and responds to the following requests:
 
     /feed/:login
 
