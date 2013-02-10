@@ -21,6 +21,8 @@ Create a new directory to hold your project's files, and then run:
 
     cs132_install javascript
 
+You can also download the assignment from GitHub: [https://github.com/brown-cs132-s13/javascript/archive/master.zip](https://github.com/brown-cs132-s13/javascript/archive/master.zip).
+
 This will give you a blank `README.md` file (to contain known bugs and any features you want to highlight), a very barebones shell of an HTML file, and a picture of Justin Bieber's face that you may use and modify as you see fit in the design of your project. There is also a "no photo" placeholder image you might want to use for Tweets that don't have pictures associated with them.
 
 You should implement all of your HTML in `bieber.html`, and all of your JavaScript in `bieber.js`.
