@@ -80,7 +80,7 @@ The standard template for an Ajax request looks something like this:
 
 You might want to encapsulate this into a simple function to make your life easier -- think about how you could write a function that works like `request(theURL, callback)`.
 
-Combine the above template with something like `setInterval(...)` (see [the Mozilla Developer Network's documentation][mdn-setInterval]) to periodically load new Tweets. Note that the timeout value passed to `setInterval(...)` is in milliseconds, and we ask that you don't use a value smaller than 3 seconds so as not to overload our server.
+Combine the above template with something like `setInterval(...)` (see [the Mozilla Developer Network's documentation][mdn-setInterval]) to periodically load new Tweets. Note that the timeout value passed to `setInterval(...)` is in milliseconds, and we ask that you don't use a value smaller than 3000 (3 seconds) so as not to overload our server.
 
   [mdn-setInterval]: https://developer.mozilla.org/en-US/docs/DOM/window.setInterval
 
