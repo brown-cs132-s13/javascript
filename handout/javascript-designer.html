@@ -181,6 +181,13 @@ pre .tex .formula {
 <pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;designer-helper.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 
+<p>&#8230; and right below that:</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;Feeder.init('bieber.mattpatenaude.com')&lt;/script&gt;
+</code></pre>
+
+<p>&#8230; to initialize the events. The domain in <code>Feeder.init</code> may change (we&#8217;ll send updates).</p>
+
 <p>Since the idea of the BieberFeed is that it&#8217;s a live stream of Bieber-oriented Tweets, having the page refresh every second with new content would be a bit annoying. For that reason, the TA library will fetch new Tweets automatically using Ajax. You&#8217;ll then need to setup a handler for responding to these incoming Tweets.</p>
 
 <h2 id="respondingtodomevents">Responding to DOM Events</h2>

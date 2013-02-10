@@ -34,11 +34,11 @@ To get started, you have to link the TA library into your HTML page. Open up `bi
 
     <script type="text/javascript" src="designer-helper.js"></script>
 
-And right below that:
+... and right below that:
 
-    <script type="text/javascript">Feeder.init('beiber.mattpatenaude.com')</script>
+    <script type="text/javascript">Feeder.init('bieber.mattpatenaude.com')</script>
 
-To initialize the events. The domain in `Feeder.init` may change (we'll send updates).
+... to initialize the events. The domain in `Feeder.init` may change (we'll send updates).
 
 Since the idea of the BieberFeed is that it's a live stream of Bieber-oriented Tweets, having the page refresh every second with new content would be a bit annoying. For that reason, the TA library will fetch new Tweets automatically using Ajax. You'll then need to setup a handler for responding to these incoming Tweets.
 
