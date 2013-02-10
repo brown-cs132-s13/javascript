@@ -130,7 +130,7 @@ You might want to use `element.insertBefore(...)` instead of `element.appendChil
   [mdn-dom]: https://developer.mozilla.org/en-US/docs/DOM/element
 
 ## Other Niceties
-Think about how your choice of mechanisms will affect the user experience of the BieberFeed. Do new Tweets appear at the top, or the bottom? Does the page keep growing in length, or do you start removing old Tweets after a certain point? Can the user start and stop the feed (hint: look up `clearInterval(...)`)? Is the list of Tweets independently scrollable (hint: lookup `overflow-y: auto`), or does the entire page scroll with it?
+Think about how your choice of mechanisms will affect the user experience of the BieberFeed. Do new Tweets appear at the top, or the bottom? Does the page keep growing in length, or do you start removing old Tweets after a certain point? Do Tweets appear several at a time, or spaced out? Can the user start and stop the feed (hint: look up `clearInterval(...)`)? Is the list of Tweets independently scrollable (hint: lookup `overflow-y: auto`), or does the entire page scroll with it?
 
 Add any features you can to try to make the experience of looking at so many Bieber Tweets bearable.
 
