@@ -1,5 +1,5 @@
 # Assignment Two: JavaScript (for Designers)
-## Due: February 15, 2013 @ 11:59pm
+## Due: February 20, 2013 @ 11:59pm
 In this assignment, you'll catch a fever: Bieber fever. You will be implementing the BieberFeed, a tool for displaying a streaming list of Tweets posted about Justin Bieber.
 
 **Important Note**: this project uses Ajax that violates [the same-origin policy][sop], and as such, it requires a web browser that supports XMLHttpRequest 2 and [CORS][cors]. This means you **must** be using [a semi-recent web browser][caniuse]: Firefox 4+, Chrome 7+, Safari 5+, or IE 10+.
